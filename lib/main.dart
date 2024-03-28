@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/rendering.dart';
+import 'package:namer_app/ui/profile_screen.dart';
 import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'dart:async';
 
 
@@ -23,6 +27,8 @@ class MyApp extends StatelessWidget {
 }
 
 
+
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -32,10 +38,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  Future<FirebaseApp> _initializeFirebase() async{
+    FirebaseApp firebaseApp = await Firebase.initializeApp();
+    return firebaseApp;
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body : LoginScreen(),
+      body : FutureBuilder(
+        future: _initializeFirebase(),
+        builder: (context, snapshot){
+          if(snapshot.connectionState==ConnectionState.done){
+            return LoginScreen();
+          }
+          return const Center(child: CircularProgressIndicator());
+        }
+      ),
     );
   }
 }
@@ -52,8 +72,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  //login function
+  static Future<User?> loginUsingEmailPassword({required String email, required String password, required BuildContext context}) async{
+    FirebaseAuth auth =FirebaseAuth.instance;
+    User? user;
+    try{
+      UserCredential userCredential= await auth.signInWithEmailAndPassword(email: email, password: password);
+      user= userCredential.user;
+
+    }on FirebaseAuthException catch (e){
+      if(e.code== "user-not-found"){
+        print("No user found");
+      }
+    }
+  return user;
+}
+
   @override
   Widget build(BuildContext context) {
+
+    TextEditingController _emailController= TextEditingController();
+    TextEditingController _passwordController= TextEditingController();
+
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -81,6 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
 
           TextField(
+            controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                 hintText: "User Email",
@@ -92,6 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
               height: 44.0
           ),
           TextField(
+            controller: _passwordController,
               obscureText: true,
               decoration: InputDecoration(
                 hintText: "Password",
@@ -120,7 +164,12 @@ class _LoginScreenState extends State<LoginScreen> {
               elevation:0.0 ,
               padding: EdgeInsets.symmetric(vertical:20.0),
               shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(12.0)),
-              onPressed: () {},
+              onPressed: () async{
+                User? user= await loginUsingEmailPassword(email: _emailController.text, password: _passwordController.text, context: context);
+                if(user!=null){
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>ProfileScreen()));
+                }
+              },
               child: Text("Login", style:TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,

@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -51,6 +48,17 @@ class DefaultFirebaseOptions {
         );
     }
   }
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyArUa56bo8vntuyupVO1XjjrAFC7YYFJUs',
+    appId: '1:775326377887:web:966565ba153d912690bfaa',
+    messagingSenderId: '775326377887',
+    projectId: 'bikerecord-data',
+    authDomain: 'bikerecord-data.firebaseapp.com',
+    databaseURL: 'https://bikerecord-data-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'bikerecord-data.appspot.com',
+    measurementId: 'G-J6TYC6LCY5',
+  );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBWHcADGH7HUP3ueuBEtSqZ21STZ3pa9Wk',
