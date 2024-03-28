@@ -1,58 +1,138 @@
-import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'dart:async';
 
-void main() {
+
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key : key) ;
 
   @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => MyAppState(),
-      child: MaterialApp(
-        title: 'Bike Records',
-        theme: ThemeData(
-          useMaterial3: true,
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-        ),
-        home: MyHomePage(),
-      ),
+  Widget build(BuildContext context){
+    return MaterialApp(
+      home:HomePage(),
     );
   }
 }
 
-class MyAppState extends ChangeNotifier {
-  var current = WordPair.random();
 
-  void getNext() {
-    current = WordPair.random();
-    notifyListeners();
-  }
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
 }
 
-class MyHomePage extends StatelessWidget {
+class _HomePageState extends State<HomePage> {
+
   @override
   Widget build(BuildContext context) {
-    var appState = context.watch<MyAppState>();
-
     return Scaffold(
-      body: Column(
+      body : LoginScreen(),
+    );
+  }
+}
+
+
+
+
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('A random pokemon has appeared:'),
-          Text(appState.current.asLowerCase),
-           ElevatedButton(
-            onPressed: () {
-              appState.getNext(); 
-            },
-            child: Text('Next'),
+          Text(
+            "MyApp Title",
+             style: TextStyle(
+              color: Colors.red, 
+              fontSize: 28.0,
+              fontWeight: FontWeight.bold,
+              ),
+            ),
+          Text(
+              "Login to your app",
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 44.0,
+                fontWeight: FontWeight.bold,
+              )
           ),
-        ],
-      ),
+          SizedBox(
+              height: 44.0,
+          ),
+
+          TextField(
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                hintText: "User Email",
+                prefixIcon : Icon(Icons.mail,color: Colors.black)
+              ),
+          ),
+
+          const SizedBox(
+              height: 44.0
+          ),
+          TextField(
+              obscureText: true,
+              decoration: InputDecoration(
+                hintText: "Password",
+                prefixIcon: Icon(Icons.password, color:Colors.black)
+              ),
+          ),
+
+
+          const SizedBox(
+              height: 12.0,
+          ),
+          
+          Text(
+              "Forgot Password?",
+              style : TextStyle(color: Colors.blue),
+          ),
+
+          const SizedBox(
+              height:88.0,
+          ),
+
+          Container(
+            width: double.infinity,
+            child: RawMaterialButton(
+              fillColor: Color(0xFF0069FE),
+              elevation:0.0 ,
+              padding: EdgeInsets.symmetric(vertical:20.0),
+              shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(12.0)),
+              onPressed: () {},
+              child: Text("Login", style:TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+              )),
+            ),
+          ),
+
+
+
+
+        ]
+      )
     );
   }
 }
