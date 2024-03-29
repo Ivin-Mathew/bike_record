@@ -1,3 +1,4 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic"
+    "java.configuration.updateBuildConfiguration": "automatic",
+    "cmake.sourceDirectory": "D:/Coding/AppDev/BikeApp/bike_record/build/windows/x64/extracted/firebase_cpp_sdk_windows"
 }

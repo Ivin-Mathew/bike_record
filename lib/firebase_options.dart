@@ -23,15 +23,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -67,5 +61,25 @@ class DefaultFirebaseOptions {
     projectId: 'bikerecord-data',
     databaseURL: 'https://bikerecord-data-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'bikerecord-data.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAsCJW_46qlCvxN1qoG6nSuChHz4nVOJH0',
+    appId: '1:775326377887:ios:287a67508afd6f9b90bfaa',
+    messagingSenderId: '775326377887',
+    projectId: 'bikerecord-data',
+    databaseURL: 'https://bikerecord-data-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'bikerecord-data.appspot.com',
+    iosBundleId: 'com.example.bikeRecord',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAsCJW_46qlCvxN1qoG6nSuChHz4nVOJH0',
+    appId: '1:775326377887:ios:fd41aa6b7cf3c37190bfaa',
+    messagingSenderId: '775326377887',
+    projectId: 'bikerecord-data',
+    databaseURL: 'https://bikerecord-data-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'bikerecord-data.appspot.com',
+    iosBundleId: 'com.example.bikeRecord.RunnerTests',
   );
 }

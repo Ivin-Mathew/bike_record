@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:namer_app/ui/read_data.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -10,10 +11,8 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:  Center(child: Text("Welcome to dashboard!"),
-      
-      )
+    return MaterialApp(
+      home:ReadData(),
     );
   }
 }
