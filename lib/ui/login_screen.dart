@@ -57,10 +57,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 fontWeight: FontWeight.bold,
               )
           ),
+
+
           SizedBox(
               height: 44.0,
           ),
-
           TextField(
             controller: _emailController,
               keyboardType: TextInputType.emailAddress,
@@ -69,6 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 prefixIcon : Icon(Icons.mail,color: Colors.black)
               ),
           ),
+
 
           const SizedBox(
               height: 44.0
