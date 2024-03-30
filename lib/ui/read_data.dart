@@ -16,8 +16,11 @@ class ReadData extends StatelessWidget {
 }
 
 class _ReadDataState extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size; 
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -36,9 +39,10 @@ class _ReadDataState extends StatelessWidget {
           return GridView.builder(
 
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3, // Number of columns
-              crossAxisSpacing: 5.0, // Spacing between columns
-              mainAxisSpacing: 10.0, // Spacing between rows
+              crossAxisCount: 1, // Number of columns
+              crossAxisSpacing: 1.0, // Spacing between columns
+              mainAxisSpacing: 1.0, // Spacing between rows
+              childAspectRatio: (size.width / 50.0),
             ),
 
             padding: EdgeInsets.all(8.0),
@@ -55,7 +59,7 @@ class _ReadDataState extends StatelessWidget {
               // Return a widget for each item
               return Card(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(name),
                     Text(bike),
@@ -71,7 +75,7 @@ class _ReadDataState extends StatelessWidget {
         onPressed: () {
            Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Writedata()), // Replace AnotherPage() with the page you want to navigate to
+                MaterialPageRoute(builder: (context) => Writedata()),
               );
         },
         backgroundColor: Colors.blue,
